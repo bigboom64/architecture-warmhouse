@@ -1,0 +1,35 @@
+@startuml
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHome, "WarmHome System") {
+  Container(ProfileSettings, "ProfileSettings Service", "Java, Spring", "Handles interactions with heating devices")
+  ContainerDb(Database, "Database", "PostgreSQL", "Stores user profiles, homes and connected devices")
+}
+
+Container(ProfileSettings, "ProfileSettings Service", "Java, Spring") {
+  Component(ProfileController, "ProfileController", "Creates/updates user profile")
+  Component(HomeController, "HomeController", "Creates/updates home info")
+  Component(DevicesController, "DevicesController", "Connect/disconnect/edit devices")
+  Component(ServiceLayer, "Service Layer", "Business logic")
+  Component(DevicesService, "DevicesService", "Interact with devices")
+  Component(RepositoryLayer, "Repository Layer", "Data access logic")
+}
+
+Container(Devices, "Devices Service", "Java, Spring", "Interact with devices")
+
+
+Rel(ProfileController,ServiceLayer,"Business logic")
+Rel(HomeController,ServiceLayer,"Business logic")
+Rel(DevicesController,ServiceLayer,"Business logic")
+
+
+Rel(ServiceLayer,RepositoryLayer,"Save/get profile/home/devices info")
+Rel(ServiceLayer,DevicesService,"Interact with devices")
+Rel(RepositoryLayer,Database,"Reads/Writes data")
+
+Rel(DevicesService,Devices,"Devices settings")
+
+
+@enduml

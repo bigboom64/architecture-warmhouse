@@ -1,0 +1,44 @@
+@startuml
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHome, "WarmHome System") {
+  Container(Devices, "Devices Service", "Java, Spring", "Handles interactions with heating devices")
+}
+
+Container(Devices, "Devices Service", "Java, Spring") {
+  Component(TelemetryController, "TelemetryController", "Get telemetry for devices")
+  Component(SettingsController, "SettingsController", "Creates/updates devices settings")
+  Component(TurnController, "TurnController", "Turn on/off devices")
+  Component(ServiceLayer, "Service Layer", "Business logic")
+  Component(HeatingService, "HeatingService", "Interact with heating devices")
+  Component(LightsService, "LightsService", "Interact with lights devices")
+  Component(GatesService, "GatesService", "Interact with gates devices")
+  Component(CameraService, "CameraService", "Interact with camera devices")
+}
+
+Container(Heating, "Heating Service", "Java, Spring", "Interact with heating devices")
+Container(Lights, "Lights Service", "Java, Spring", "Interact with lights devices")
+Container(Gates, "Gates Service", "Java, Spring", "Interact with gates devices")
+Container(Cameras, "Cameras Service", "Java, Spring", "Interact with cameras devices")
+
+
+Rel(TelemetryController,ServiceLayer,"Business logic")
+Rel(SettingsController,ServiceLayer,"Business logic")
+Rel(TurnController,ServiceLayer,"Business logic")
+
+
+Rel(ServiceLayer,HeatingService,"Interact with devices")
+Rel(ServiceLayer,LightsService,"Interact with devices")
+Rel(ServiceLayer,GatesService,"Interact with devices")
+Rel(ServiceLayer,CameraService,"Interact with devices")
+
+
+Rel(HeatingService,Heating,"Heating settings/info")
+Rel(LightsService,Lights,"Lights settings/info")
+Rel(GatesService,Gates,"Gates settings/info")
+Rel(CameraService,Cameras,"Cameras settings/info")
+
+
+@enduml

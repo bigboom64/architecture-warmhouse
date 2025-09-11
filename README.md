@@ -55,12 +55,12 @@
 
 **Диаграмма контейнеров (Containers)**
 
-Добавьте диаграмму.
+[Containers](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
 
 **Диаграмма компонентов (Components)**
-
-Добавьте диаграмму для каждого из выделенных микросервисов.
-
+[девайсы](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
+[отопление](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
+[профиль](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
 **Диаграмма кода (Code)**
 
 Добавьте одну диаграмму или несколько.
