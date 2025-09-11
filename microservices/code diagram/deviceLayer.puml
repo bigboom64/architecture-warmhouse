@@ -1,0 +1,73 @@
+@startuml
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Component(ServiceLayer, "ServiceLayer", "business logic") {
+    class SettingsRequest {
+       +Long deviceId
+       +String setting1
+       +String setting2
+    }
+
+    class TelemetryRequest {
+       +Long deviceId
+    }
+
+    class TelemetryResponse {
+       +Long deviceId
+       +Map<Data,String> telemetryData
+    }
+
+
+    class Device {
+      +Long id
+      +Enum type
+      TelemetryResponse getTelemetry()
+      +void register()
+      +void changeSettings()
+      +void turnOn()
+      +void turnOff()
+    }
+
+
+    Device -->  TelemetryResponse : returns
+    Device -->  AbstractResponse : returns
+    Device <--  SettingsRequest : receives
+    Device <--  TelemetryRequest : receives
+}
+
+class AbstractResponse {
+  +Enum status
+}
+
+Component(HeatingService, "HeatingService") {
+}
+Component(LightsService, "LightsService") {
+}
+Component(GatesService, "GatesService") {
+}
+Component(CameraService, "CameraService") {
+}
+
+
+Component(TelemetryController, "TelemetryController") {
+}
+Component(SettingsController, "SettingsController") {
+}
+Component(TurnController, "TurnController") {
+}
+
+Device -->  HeatingService : interact
+Device -->  LightsService : interact
+Device -->  GatesService : interact
+Device -->  CameraService : interact
+
+TelemetryController --> TelemetryRequest : generates
+TelemetryController <-- TelemetryResponse : receives
+SettingsController --> SettingsRequest : generates
+SettingsController <-- AbstractResponse : receives
+TurnController --> AbstractResponse : receives
+
+@enduml

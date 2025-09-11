@@ -58,16 +58,16 @@
 [Containers](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
 
 **Диаграмма компонентов (Components)**
-[девайсы](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
-[отопление](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
-[профиль](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/containers.png)
+[девайсы](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/Components/devices.png)
+[отопление](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/Components/heating.png)
+[профиль](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/Components/wh_profile.png)
 **Диаграмма кода (Code)**
 
-Добавьте одну диаграмму или несколько.
+[deviceLayer]()
 
 # Задание 3. Разработка ER-диаграммы
 
-Добавьте сюда ER-диаграмму. Она должна отражать ключевые сущности системы, их атрибуты и тип связей между ними.
+
 
 # Задание 4. Создание и документирование API
 

@@ -1,0 +1,63 @@
+@startuml
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam class {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+hide circle
+
+class Home {
+  +Long id
+  +Long profileId
+  +String address
+  +Timestamp createdTs
+}
+
+class Profile {
+  +Long id
+  +String Name
+  +Long passport
+  +Timestamp createdTs
+}
+
+class Device {
+  +Long id
+  +Long typeId
+  +Long homeId
+  +Long serialNumber
+  +JsonNode settings
+  +Timestamp createdTs
+}
+
+class DeviceType {
+  +Long id
+  +Enum value
+  +JsonNode payload
+}
+
+class Telemetry {
+  +Long id
+  +Long deviceId
+  +Enum deviceStatus
+  +Long metric
+  +Timestamp timestamp
+  +JsonNode payload
+}
+
+class DeviceStatus {
+  +Long id
+  +Enum value
+  +JsonNode payload
+}
+
+
+Profile --o{ Home
+Home --o{ Device
+Device o--|{ Telemetry
+DeviceType ||--o{ Device
+DeviceStatus }o--o{ Telemetry
+
+@enduml
