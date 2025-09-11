@@ -63,17 +63,21 @@
 [профиль](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/Components/wh_profile.png)
 **Диаграмма кода (Code)**
 
-[deviceLayer]()
+[deviceLayer](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/code_diagram/deviceLayer.png)
 
 # Задание 3. Разработка ER-диаграммы
 
-
+[er](https://github.com/bigboom64/architecture-warmhouse/blob/warmhouse/microservices/er.png)
 
 # Задание 4. Создание и документирование API
 
 ### 1. Тип API
 
-Укажите, какой тип API вы будете использовать для взаимодействия микросервисов. Объясните своё решение.
+Выбрал бы REST или gRPC в зависимости от задачи.
+Клиент → сервис
+тут бы подошел REST
+Сервис → сервис	 (если микросервисы общаются только между собой)
+тут скорее gRPC 
 
 ### 2. Документация API
 
