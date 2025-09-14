@@ -1,0 +1,39 @@
+@startuml
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "User", "A user of the system")
+System(WarmHome, "WarmHome System", "System managing devices, their setting and provides information")
+
+Container_Boundary(WarmHome, "WarmHome System") {
+  Container(WebApp, "API Gateway", "Java, Spring", "Handles user interactions")
+  Container(ProfileSettings, "ProfileSettings Service", "Java, Spring", "Create user, home, connect new devices to home")
+  Container(Devices, "Devices Service", "Java, Spring", "Interact with devices, get information from devices")
+  Container(Heating, "Heating Service", "Java, Spring", "Interact with heating devices")
+  Container(Lights, "Lights Service", "Java, Spring", "Interact with lights devices")
+  Container(Gates, "Gates Service", "Java, Spring", "Interact with gates devices")
+  Container(Cameras, "Cameras Service", "Java, Spring", "Interact with cameras devices")
+}
+
+System_Ext(heating, "Heating Devices", "External devices")
+System_Ext(lights, "Lights Devices", "External devices")
+System_Ext(gates, "Gates Devices", "External devices")
+System_Ext(cameras, "Cameras Devices", "External devices")
+
+
+Rel(user, WebApp, "Uses the system")
+Rel(WebApp,ProfileSettings,"Create new user, add new device")
+Rel(WebApp,Devices,"Turn on/off device, get information")
+Rel(ProfileSettings,Devices,"Connect new device")
+Rel(Devices,Heating,"Heating settings/info")
+Rel(Devices,Lights,"Lights settings/info")
+Rel(Devices,Gates,"Gates settings/info")
+Rel(Devices,Cameras,"Cameras settings/info")
+Rel(Heating,heating,"Interact with external device")
+Rel(Lights,lights,"Interact with external device")
+Rel(Gates,gates,"Interact with external device")
+Rel(Cameras,cameras,"Interact with external device")
+
+@enduml

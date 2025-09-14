@@ -1,0 +1,34 @@
+@startuml
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHome, "WarmHome System") {
+  Container(Heating, "Heating Service", "Java, Spring", "Handles interactions with heating devices")
+  ContainerDb(Database, "Database", "PostgreSQL", "Stores heating devices updates")
+}
+
+Container(Heating, "Heating Service", "Java, Spring") {
+  Component(SettingsController, "SettingsController", "Handles requests for changing device settings (install device)")
+  Component(TelemetryController, "TelemetryController", "Provides telemetry information")
+  Component(TurnController, "TurnController", "Turn on/off device")
+  Component(DeviceService, "DeviceService", "Handles communication with external device")
+  Component(ServiceLayer, "Service Layer", "Business logic")
+  Component(RepositoryLayer, "Repository Layer", "Data access logic")
+}
+
+System_Ext(heating, "Heating Devices", "External devices")
+
+
+
+Rel(ServiceLayer,RepositoryLayer,"Reads telemetry data")
+Rel(RepositoryLayer,Database,"Reads/Writes data")
+Rel(DeviceService,heating,"Change device settings, turn on/off")
+Rel(heating,DeviceService,"Kafka topic with updates from deice (temperature)")
+Rel(SettingsController,ServiceLayer,"Change settings")
+Rel(TelemetryController,ServiceLayer,"Get telemetry information")
+Rel(TurnController,ServiceLayer,"Turn on/off device")
+Rel(DeviceService,RepositoryLayer,"Save telemetry information")
+Rel(ServiceLayer,DeviceService,"Turn on/off device, change settings")
+
+@enduml

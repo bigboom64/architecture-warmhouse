@@ -1,0 +1,272 @@
+openapi: 3.0.0
+info:
+  title: Device Management API
+  version: 1.0.0
+  description: API для управления устройствами, их статусами, телеметрией и командами
+
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+  /devices/{id}:
+    get:
+      summary: Получить информацию об устройстве
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '404':
+          description: Устройство не найдено
+        '500':
+          description: Внутренняя ошибка
+
+  /devices/{id}/status:
+    put:
+      summary: Обновить статус устройства
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: "ON"
+                payload:
+                  type: object
+      responses:
+        '200':
+          description: Успешно обновлено
+        '400':
+          description: Неверный формат
+        '404':
+          description: Устройство не найдено
+        '500':
+          description: Ошибка сервера
+
+  /devices/{id}/commands:
+    post:
+      summary: Отправить команду устройству
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                command:
+                  type: string
+                  example: "REBOOT"
+                parameters:
+                  type: object
+      responses:
+        '202':
+          description: Команда принята
+        '400':
+          description: Неверный запрос
+        '404':
+          description: Устройство не найдено
+        '500':
+          description: Ошибка выполнения
+
+  /devices/{id}/telemetry:
+    get:
+      summary: Получить телеметрию устройства
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Телеметрия
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Telemetry'
+        '400':
+          description: Неверный диапазон дат
+        '404':
+          description: Устройство не найдено
+        '500':
+          description: Ошибка сервера
+
+  /devices:
+    post:
+      summary: Создать устройство
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceInput'
+      responses:
+        '201':
+          description: Устройство создано
+        '400':
+          description: Ошибка валидации
+        '409':
+          description: Уже существует
+        '500':
+          description: Внутренняя ошибка
+
+  /device-types:
+    get:
+      summary: Получить список типов устройств
+      responses:
+        '200':
+          description: Типы устройств
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceType'
+
+  /device-statuses:
+    get:
+      summary: Получить список статусов устройств
+      responses:
+        '200':
+          description: Статусы
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceStatus'
+
+  /profiles/{id}/homes:
+    get:
+      summary: Получить список домов пользователя
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Дома пользователя
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Home'
+
+components:
+  schemas:
+    Device:
+      type: object
+      properties:
+        id:
+          type: integer
+        typeId:
+          type: integer
+        homeId:
+          type: integer
+        serialNumber:
+          type: string
+        settings:
+          type: object
+        createdTs:
+          type: string
+          format: date-time
+
+    DeviceInput:
+      type: object
+      properties:
+        typeId:
+          type: integer
+        homeId:
+          type: integer
+        serialNumber:
+          type: string
+        settings:
+          type: object
+
+    DeviceType:
+      type: object
+      properties:
+        id:
+          type: integer
+        value:
+          type: string
+        payload:
+          type: object
+
+    DeviceStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        value:
+          type: string
+        payload:
+          type: object
+
+    Telemetry:
+      type: object
+      properties:
+        id:
+          type: integer
+        deviceId:
+          type: integer
+        deviceStatus:
+          type: string
+        metric:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        payload:
+          type: object
+
+    Home:
+      type: object
+      properties:
+        id:
+          type: integer
+        profileId:
+          type: integer
+        address:
+          type: string
+        createdTs:
+          type: string
+          format: date-time

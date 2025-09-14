@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  temperature-api:
+    build: .
+    container_name: temperature-api
+    ports:
+      - "8081:8081"
+    environment:
+      - PORT=8081
+    restart: unless-stopped
