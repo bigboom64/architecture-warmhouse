@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8081
 
 # Команда запуска
-CMD ["node", "index.js"]
+CMD ["node", "temperture.js"]
