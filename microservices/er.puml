@@ -54,7 +54,7 @@ class DeviceStatus {
 }
 
 
-Profile --o{ Home
+Profile }o--o{ Home
 Home --o{ Device
 Device o--|{ Telemetry
 DeviceType ||--o{ Device
