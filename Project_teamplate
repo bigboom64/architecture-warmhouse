@@ -85,6 +85,8 @@
 
 # Задание 5. Работа с docker и docker-compose
 
+[сложил сюда] (https://github.com/bigboom64/architecture-warmhouse/tree/warmhouse/microservices/task_5_project)
+
 Перейдите в apps.
 
 Там находится приложение-монолит для работы с датчиками температуры. В README.md описано как запустить решение.
